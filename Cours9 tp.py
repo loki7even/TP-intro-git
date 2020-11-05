@@ -1,4 +1,4 @@
-from random import randnt
+from random import randint
 
 """Give a name and make comments"""
 
@@ -158,7 +158,7 @@ def game():
     possible = frozenset(S)
     results = frozenset((well,bad) for well in range(5) for bad in range(5-well) if not (well == 3 and bad == 1))
     while notFound and (tries<=10):
-        prin('try',tries)
+        print('try',tries)
         selected = chooseGameBis(S,possibles, results,)
         print('computer proposal: ',end='')
         displayCache(selected)
