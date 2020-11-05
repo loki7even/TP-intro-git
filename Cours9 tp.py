@@ -1,12 +1,12 @@
-from random import randnt
+from random import randint
 
 """Give a name and make comments"""
+#Génère array de 1 à 6 de longueur 4
 
 def initCache(nbColors=6,nbPawns=4):
 
-    retrn [randint(1,nbColors) for i in range(nbPawns)]
+    return [randint(1,nbColors) for i in range(nbPawns)]
 
- 
 
 """Give a name and make comments"""
 
