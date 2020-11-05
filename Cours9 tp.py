@@ -20,19 +20,19 @@ def choose(nbColors=6,nbPawns=4):
 
         selected = input('Input your proposal: ')
 
-        if len(selecte) == nbPawns:
+        if len(selected) == nbPawns:
 
             selected = [int(x) for x in list(selected)]
 
             for x in selected:
 
-                if (x<1) or (x>nbColor):
+                if (x < 1) or (x > nbColors):
 
                     nocorrect = True
 
         else:
 
-            ncorrect = True
+            nocorrect = True
 
     return selected
 
@@ -104,7 +104,7 @@ def master():
     print()
     while notFound and (tries<=nbTry):
         print('try',tries)
-        well,bad = evaluation(chose(nbC,nbP),cache)
+        well,bad = evaluation(choose(nbC, nbP), cache)
         display(well,bad)
         if well == nbP:
             notFound = False
@@ -115,7 +115,7 @@ def master():
         displayCache(cache)
     else:
         print("Congratulations, you have found well:", end=' ')
-        displyCache(cache)
+        displayCache(cache)
  
 """Give a name and make comments"""
 def chooseGame(S,possibles,results,tries):
@@ -159,7 +159,7 @@ def game():
     results = frozenset((well,bad) for well in range(5) for bad in range(5-well) if not (well == 3 and bad == 1))
     while notFound and (tries<=10):
         print('try',tries)
-        selected = chooseGameBis(S,possibles, results,)
+        selected = chooseGameBis(S,possible, results,)
         print('computer proposal: ',end='')
         displayCache(selected)
         print()
