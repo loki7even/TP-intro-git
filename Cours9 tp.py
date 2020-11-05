@@ -6,8 +6,6 @@ def initCache(nbColors=6,nbPawns=4):
 
     return [randint(1,nbColors) for i in range(nbPawns)]
 
-
-
 """Give a name and make comments"""
 
 def choose(nbColors=6,nbPawns=4):
@@ -35,8 +33,6 @@ def choose(nbColors=6,nbPawns=4):
             nocorrect = True
 
     return selected
-
-
 
 """Give a name and make comments"""
 
@@ -68,14 +64,11 @@ def evaluation(selected,cache):
 
     return WellPut,Misplaced
 
-
-
 """Give a name and make comments"""
 
 def display(well,bad):
 
     print(well,"well spot and",bad,"bad ",'\n')
-
 
 
 """Give a name and make comments"""
@@ -86,9 +79,8 @@ def displayCache(cache):
 
         print(x,end='')
 
-
-
 """Give a name and make comments"""
+
 def gameParameters():
     nbC = int(input('Input the number of colors: '))
     nbP = int(input(' Enter the length of the sequence to guess: '))
@@ -96,6 +88,7 @@ def gameParameters():
     return nbC,nbP,nbTry
  
 """Give a name and make comments"""
+
 def master():
     nbC,nbP,nbTry = gameParameters()
     cache = initCache(nbC,nbP)
@@ -118,6 +111,7 @@ def master():
         displayCache(cache)
  
 """Give a name and make comments"""
+
 def chooseGame(S,possibles,results,tries):
     if tries == 1:
         return [1,1,2,2]
@@ -127,6 +121,7 @@ def chooseGame(S,possibles,results,tries):
         return max(possibles, key=lambda x: min(sum(1 for p in S if evaluation(p,x) != res) for res in results))
  
 """Give a name and make comments"""
+
 def chooseGameBis(S,possibles,results,tries):
     if tries == 1:
         return [1,1,2,2]
@@ -149,17 +144,18 @@ def chooseGameBis(S,possibles,results,tries):
         return xx
                 
 """Give a name and make comments"""
+
 def game():
     nbC,nbP = 6,4
     cache = initCache(nbC,nbP)
     notFound = True
     tries = 1
     S = set((x,y,z,t) for x in range(1,7) for y in range(1,7) for z in range (1,7) for t in range(1,7))
-    possible = frozenset(S)
+    possibles = frozenset(S)
     results = frozenset((well,bad) for well in range(5) for bad in range(5-well) if not (well == 3 and bad == 1))
     while notFound and (tries<=10):
         print('try',tries)
-        selected = chooseGameBis(S,possible, results,)
+        selected = chooseGameBis(S,possibles,results,tries)
         print('computer proposal: ',end='')
         displayCache(selected)
         print()
@@ -172,7 +168,7 @@ def game():
             S.difference_update(set(coup for coup in S if (well,bad) != evaluation(coup,selected)))
     if tries == 11:
         print("lost, we had to find:",end=' ')
-        displyCache(cache)
+        displayCache(cache)
     else:
         print("He is strong, he found", end=' ')
         displayCache(cache)
