@@ -1,12 +1,12 @@
 from random import randint
 
-"""Give a name and make comments"""
+#Crée une séquence de 4 chiffres, allant de 1 à 6
 
 def initCache(nbColors=6,nbPawns=4):
 
     return [randint(1,nbColors) for i in range(nbPawns)]
 
-"""Give a name and make comments"""
+#Joueur entre une proposition, répète tant que la proposition est impossible.
 
 def choose(nbColors=6,nbPawns=4):
 
@@ -18,13 +18,13 @@ def choose(nbColors=6,nbPawns=4):
 
         selected = input('Input your proposal: ')
 
-        if len(selected) == nbPawns:
+        if len(selected) == nbPawns:            #Vérification, a-t-on entré le bon nombre de chiffres?
 
             selected = [int(x) for x in list(selected)]
 
             for x in selected:
 
-                if (x < 1) or (x > nbColors):
+                if (x < 1) or (x > nbColors):   #Vérification, y a-t-il des valeurs interdites?
 
                     nocorrect = True
 
@@ -34,44 +34,44 @@ def choose(nbColors=6,nbPawns=4):
 
     return selected
 
-"""Give a name and make comments"""
+#Comparaison proposition à réponse
 
-def evaluation(selected,cache):
+def evaluation(selected,cache): #Selected = valeur entrée par le joueur, cache = réponse à trouver
 
     WellPut = 0
 
     Misplaced = 0
 
-    copySelected,copyCache = list(selected),list(cache)
+    copySelected,copyCache = list(selected),list(cache) #Copie des listes pour pouvoir les modifier sans casser les boucles basées sur ces listes.
 
     for i in range(len(cache)):
 
         if copySelected[i] == copyCache[i]:
 
-            WellPut += 1
+            WellPut += 1    #Si même valeur, dire qu'une est bien placée
 
             copySelected[i],copyCache[i] = -1,-1
 
     for i in range(len(cache)):
 
-        for j in range(len(cache)):
+        for j in range(len(cache)): #Double for pour pouvoir parcourir toute la liste à chaque tour
 
-            if (copySelected[i] == copyCache[j]) and (copySelected[i] != -1):
+            if (copySelected[i] == copyCache[j]) and (copySelected[i] != -1):   #Scanne la liste pour voir si il n'y a pas un chiffre correct mais mal placé. Est ignoré si on a pas déjà well put.
 
-                Misplaced += 1
+                Misplaced += 1  
 
                 copySelected[i],copyCache[j] = -1,-1
 
     return WellPut,Misplaced
 
-"""Give a name and make comments"""
+#Affiche les bons chiffres bien placés, et les bons chiffres mal placés
 
 def display(well,bad):
 
     print(well,"well spot and",bad,"bad ",'\n')
 
 
-"""Give a name and make comments"""
+#Affiche la réponse
 
 def displayCache(cache):
 
@@ -79,7 +79,7 @@ def displayCache(cache):
 
         print(x,end='')
 
-"""Give a name and make comments"""
+#Définition manuelle des paramètres du jeu, longueur de la chaîne à deviner, nombre de "couleurs" à deviner
 
 def gameParameters():
     nbC = int(input('Input the number of colors: '))
@@ -87,19 +87,19 @@ def gameParameters():
     nbTry = int(input(' Enter the number of trials: '))
     return nbC,nbP,nbTry
  
-"""Give a name and make comments"""
+#Jeu joué manuellement
 
 def master():
-    nbC,nbP,nbTry = gameParameters()
-    cache = initCache(nbC,nbP)
-    notFound = True
+    nbC,nbP,nbTry = gameParameters()    #Initialisation jeu
+    cache = initCache(nbC,nbP)          #Initialisation réponse
+    notFound = True                     #Réponse pas trouvée
     tries = 1
-    print()
-    while notFound and (tries<=nbTry):
+    print() #Espace les print
+    while notFound and (tries<=nbTry):  #Tant qu'on a pas trouvé et qu'on a pas dépassé le nombre d'essais
         print('try',tries)
-        well,bad = evaluation(choose(nbC, nbP), cache)
+        well,bad = evaluation(choose(nbC, nbP), cache)  #Vérification de notre réponse
         display(well,bad)
-        if well == nbP:
+        if well == nbP: #Condition de réussite du jeu
             notFound = False
         else:
             tries += 1
@@ -110,7 +110,7 @@ def master():
         print("Congratulations, you have found well:", end=' ')
         displayCache(cache)
  
-"""Give a name and make comments"""
+#Algorithme de résolution automatique 1
 
 def chooseGame(S,possibles,results,tries):
     if tries == 1:
@@ -120,7 +120,7 @@ def chooseGame(S,possibles,results,tries):
     else:
         return max(possibles, key=lambda x: min(sum(1 for p in S if evaluation(p,x) != res) for res in results))
  
-"""Give a name and make comments"""
+#Algorithme de résolution automatique 2
 
 def chooseGameBis(S,possibles,results,tries):
     if tries == 1:
@@ -143,7 +143,7 @@ def chooseGameBis(S,possibles,results,tries):
                 xx = x
         return xx
                 
-"""Give a name and make comments"""
+#Jeu joué automatiquement
 
 def game():
     nbC,nbP = 6,4
@@ -173,6 +173,17 @@ def game():
         print("He is strong, he found", end=' ')
         displayCache(cache)
                
-"""Give a name and make comments"""
+#Jeu lancé
 
-game() 
+def init():
+    pasChoisi=True
+    while pasChoisi==True:
+        choix = int(input("Lancez le jeu : Automatiquement(0), Manuellement(1)"))
+        if choix == 0 or choix == 1:
+            pasChoisi = False
+    if choix == 0:
+        game()
+    else:
+        master()
+
+init()
