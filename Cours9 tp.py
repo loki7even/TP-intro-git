@@ -18,13 +18,13 @@ def choose(nbColors=6,nbPawns=4):
 
         selected = input('Input your proposal: ')
 
-        if len(selected) == nbPawns:            #Vérification, a-t-on entré le bon nombre de chiffres?
+        if len(selected) == nbPawns:            # Vérification de l'entrée
 
             selected = [int(x) for x in list(selected)]
 
             for x in selected:
 
-                if (x < 1) or (x > nbColors):   #Vérification, y a-t-il des valeurs interdites?
+                if (x < 1) or (x > nbColors):   # Vérification de valeurs interdites.
 
                     nocorrect = True
 
@@ -34,7 +34,7 @@ def choose(nbColors=6,nbPawns=4):
 
     return selected
 
-#Comparaison proposition à réponse
+# Comparaison proposition à réponse
 
 def evaluation(selected,cache): #Selected = valeur entrée par le joueur, cache = réponse à trouver
 
@@ -48,15 +48,15 @@ def evaluation(selected,cache): #Selected = valeur entrée par le joueur, cache 
 
         if copySelected[i] == copyCache[i]:
 
-            WellPut += 1    #Si même valeur, dire qu'une est bien placée
+            WellPut += 1    # Si même valeur, dire qu'une est bien placée
 
             copySelected[i],copyCache[i] = -1,-1
 
     for i in range(len(cache)):
 
-        for j in range(len(cache)): #Double for pour pouvoir parcourir toute la liste à chaque tour
+        for j in range(len(cache)): # Double for pour pouvoir parcourir toute la liste à chaque tour
 
-            if (copySelected[i] == copyCache[j]) and (copySelected[i] != -1):   #Scanne la liste pour voir si il n'y a pas un chiffre correct mais mal placé. Est ignoré si on a pas déjà well put.
+            if (copySelected[i] == copyCache[j]) and (copySelected[i] != -1):   # Scanne la liste pour voir si il n'y a pas un chiffre correct mais mal placé. Est ignoré si on a pas déjà well put.
 
                 Misplaced += 1  
 
@@ -64,14 +64,14 @@ def evaluation(selected,cache): #Selected = valeur entrée par le joueur, cache 
 
     return WellPut,Misplaced
 
-#Affiche les bons chiffres bien placés, et les bons chiffres mal placés
+# Affiche les bons chiffres bien placés, et les bons chiffres mal placés
 
 def display(well,bad):
 
     print(well,"well spot and",bad,"bad ",'\n')
 
 
-#Affiche la réponse
+# Affiche la réponse
 
 def displayCache(cache):
 
